@@ -29,14 +29,21 @@ P_wi_vk=[[0 for i in range(2)] for j in range(3)]
 # step2 P(w_i|v_k)の更新
 for i in range(DICE_NUM):
     for k in range(VALUE_NUM):
-        P_wi_vk[i][k] = PI[i]*THETA[i][k]
+        denom = 0
+        for j in range(DICE_NUM):
+            denom += PI[j]*THETA[j][k]
+        P_wi_vk[i][k] = PI[i]*THETA[i][k]/denom
 
 
 # step3-1 π^iの更新
 for i in range(DICE_NUM):
     for k in range(VALUE_NUM):
-        PINEW[i] = 1/N*(R[k]*P_wi_vk[i][k])
+        PINEW[i] += 1/N*(R[k]*P_wi_vk[i][k])
 
 
 # step3-2 更新したπ^iをベイズの定理に代入してP(w_i|v_k)の更新
+for i in range(DICE_NUM):
+    print(PINEW[i])
+
+
 #P_wi_vk_NEW =
