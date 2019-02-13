@@ -30,10 +30,11 @@ logP_old = 0
 CONV = False
 
 
-#収束するまで
+#収束するまでの反復回数
 count = 0
 
 while CONV==False:
+    PI_old = PI.copy()
 
     # step2 P(w_i|v_k)の更新
     for k in range(VALUE_NUM):
@@ -59,12 +60,12 @@ while CONV==False:
             P_wi_vk[i][k] = PI[i]*THETA[i][k]/denom321
 
     # step3-2-2 3-2-1の更新した値を用いてθ_ikの更新
-    for i in range(DICE_NUM):
-        denom322 = 0
-        for j in range(VALUE_NUM):
-            denom322 += R[j] * P_wi_vk[i][j]
-        for k in range(VALUE_NUM):
-            THETA[i][k] = R[k] * P_wi_vk[i][k] / denom322
+#    for i in range(DICE_NUM):
+#        denom322 = 0
+#        for j in range(VALUE_NUM):
+#            denom322 += R[j] * P_wi_vk[i][j]
+#        for k in range(VALUE_NUM):
+#            THETA[i][k] = R[k] * P_wi_vk[i][k] / denom322
 
     # 式(5.8)でPを計算
     for k in range(VALUE_NUM):
@@ -78,13 +79,12 @@ while CONV==False:
     for k in range(VALUE_NUM):
         logP_new += R[k] * np.log(P[k])
     print(logP_new,logP_old)
-
+    print(PI)
 
     # 収束判定
     if abs(logP_new - logP_old) < EPS:
         CONV = True
         print(count)
-        print(PI)
 
     logP_old = logP_new
     count += 1
