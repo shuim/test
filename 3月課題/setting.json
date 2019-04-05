@@ -1,0 +1,8 @@
+{
+  "n_observations":3,
+  "n_dicevalues":2,
+  "n_dicetypes":3,
+  "A_matrixfile":"A.csv",
+  "B_matrixfile":"B.csv",
+  "Rho_vectorfile":"Rho.csv"
+}
